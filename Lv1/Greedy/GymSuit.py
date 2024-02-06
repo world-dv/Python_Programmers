@@ -1,28 +1,17 @@
 def solution(n, lost, reserve):
     answer = 0
-    visited = [1 for i in range(n)]
-    lost.sort()
-    reserve.sort()
     
-    for i in lost:
-        if i in reserve:
-            visited[i-1] = 1
-            reserve.pop(reserve.index(i))
-        else:
-            visited[i-1] = 0
+    arr = [i for i in lost if i not in reserve]
+    arr2 = [i for i in reserve if i not in lost]
+    arr.sort()
+    arr2.sort()
     
-    for j in reserve:
-        value = j - 1
-        if value == 0:
-            if not visited[value + 1]:    
-                visited[value + 1] = 1
-        elif value == n - 1:
-            if not visited[value - 1]:
-                visited[value - 1] = 1
-        else:
-            if not visited[value - 1]:
-                visited[value - 1] = 1
-            elif not visited[value + 1]:    
-                visited[value + 1] = 1
-    answer = len([i for i in visited if i != 0])
+    for i in arr2:
+        if i-1 in arr:
+            arr.remove(i-1)
+        elif i+1 in arr:
+            arr.remove(i+1)
+    
+    answer = n - len(arr)
+    
     return answer
