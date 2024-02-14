@@ -1,12 +1,10 @@
 def solution(cards):
     global visit
     answer = []
-    visit = [0 for _ in range(len(cards))]
     visited = [0 for _ in range(len(cards))]
     for i in range(len(cards)):
         if not visited[i-1]:
             #카운트 -> 결과 반환
-            visit[i-1] = 1
             answer.append(countResult(cards, visited, i-1))
     answer = sorted(answer)
     if len(answer) > 1:
