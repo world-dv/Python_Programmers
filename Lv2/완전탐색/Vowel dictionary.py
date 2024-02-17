@@ -1,21 +1,23 @@
 def solution(word):
-    global arr
+    global answer, count
     answer = 0
-    arr = []
-    dfs(word[0], 0)
-    a = {'A' : 1, 'E' : 782, 'I' : 1563, 'O': 2344, 'U' : 3125}
-    answer += arr.index(word) + a[word[0]]
-    return answer
-
-def dfs(word, count):
-    global answer
+    count = 0
     
-    if word not in arr:
-        arr.append(word)
-    count += 1
-    if count >= 5:
-        word = ''
-        return 
+    def dfs(start, n, target):
+        global answer, count
+        count += 1
+        if target == start:
+            answer = count
+        if len(start) == n:
+            return
+        for i in 'AEIOU':
+            dfs(start+i, n, target)
+            
+    dfs(word[0], 5, word)
     
     for i in 'AEIOU':
-        dfs(word+i, count)
+        if i == word[0]:
+            break
+        answer += 781
+    
+    return answer
