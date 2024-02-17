@@ -1,16 +1,17 @@
 def solution(k, dungeons):
-    global answer
     answer = []
-    for i in range(len(dungeons)):
-        visited = [0] * len(dungeons)
-        dfs(k, i, visited, dungeons)
+    visited = [0 for _ in range(len(dungeons))]
+    
+    def dfs(hp, visited):
+        if sum(visited) not in answer:
+            answer.append(sum(visited))
+        if hp <= 0:
+            return
+        for i, j in enumerate(dungeons):
+            if not visited[i] and hp >= j[0]:
+                visited[i] = 1
+                dfs(hp - j[1], visited)
+                visited[i] = 0
+        
+    dfs(k, visited)
     return max(answer)
-
-def dfs(k, i, visited, dungeons):
-    visited[i] = 1
-    k = k - dungeons[i][1]
-    answer.append(sum(visited))
-    for a in range(len(dungeons)):
-        if not visited[a] and dungeons[a][0] <= k:
-            dfs(k, a, visited, dungeons)
-            visited[a] = 0
